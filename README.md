@@ -30,7 +30,9 @@ xattr -dr com.apple.quarantine "/Applications/Life OS.app"
 ## What's inside
 
 - **Your vault, as a life.** Point it at an Obsidian vault or any folder of Markdown. It redraws the moment a note changes.
-- **Four worlds, light and dark:** Desktop, Editorial, Reel and Sleeve.
+- **Eight worlds, light and dark:** Desktop, Editorial, Reel, Sleeve, Ask, Socratis Sanctuary, Atelier and Observatory.
+- **A council of 19 agents**, guided practices, life pillars, agent organisation and automation plans.
+- **Voice notes and read aloud** in sessions and pillars, with recordings included in full backups. Local transcription requires whisper-cli, ffmpeg and a Whisper model installed on your Mac; device speech needs no API key.
 - **Graph view, Search (⌘K), Ask My Life and a Year view.** Ask My Life answers from your notes and cites them.
 - **Explore lives.** Nine demo lives, fictional, public-figure and historical, each labelled for what it is.
 - **Safe by default.** Life OS reads your notes and only saves changes after you allow it. It keeps the previous version of every note, and it can keep a full backup copy of your vault.
