@@ -31,6 +31,7 @@ xattr -dr com.apple.quarantine "/Applications/Life OS.app"
 
 - **Your vault, as a life.** Point it at an Obsidian vault or any folder of Markdown. It redraws the moment a note changes.
 - **Eight worlds, light and dark:** Desktop, Editorial, Reel, Sleeve, Ask, Socratis Sanctuary, Atelier and Observatory.
+- **Available views are your choice.** Desktop, Editorial, Ask and Socratis Observatory appear by default. Enable or hide any view in Settings → Appearance, saved on your device.
 - **A council of 19 agents**, guided practices, life pillars, agent organisation and automation plans.
 - **Voice notes and read aloud** in sessions and pillars, with recordings included in full backups. Local transcription requires whisper-cli, ffmpeg and a Whisper model installed on your Mac; device speech needs no API key.
 - **Graph view, Search (⌘K), Ask My Life and a Year view.** Ask My Life answers from your notes and cites them.
