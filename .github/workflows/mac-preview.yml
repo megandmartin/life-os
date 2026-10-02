@@ -1,0 +1,49 @@
+name: Build Mac preview from verified release input
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - name: Download prepared release input
+        run: |
+          gh release download v0.3.0 --repo "$GITHUB_REPOSITORY" --pattern release-input.tar.gz
+          tar -xzf release-input.tar.gz
+      - name: Recover unchanged public media and verify every image
+        working-directory: desktop-app
+        run: |
+          node <<'JS'
+          const fs=require('fs'),path=require('path'),crypto=require('crypto');
+          const hashes=JSON.parse(fs.readFileSync('media-hashes.json'));
+          const queue=Object.entries(hashes);
+          async function worker(){while(queue.length){const [name,hash]=queue.shift();const file=path.join('web',name);if(!fs.existsSync(file)){const r=await fetch('https://open-your-life.vercel.app/app/'+name);if(!r.ok)throw new Error(name+' HTTP '+r.status);fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,Buffer.from(await r.arrayBuffer()));}if(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')!==hash)throw new Error('Image differs from approved build: '+name);}}
+          Promise.all(Array.from({length:8},worker)).then(()=>console.log('All images match approved release')).catch(e=>{console.error(e);process.exitCode=1;});
+          JS
+      - name: Install build dependencies
+        working-directory: desktop-app
+        run: npm ci
+      - name: Build and verify both Mac installers
+        working-directory: desktop-app
+        run: |
+          ./node_modules/.bin/electron-builder --mac dmg --arm64 --x64
+          codesign --verify --deep --strict 'release/mac-arm64/Life OS.app'
+          codesign --verify --deep --strict 'release/mac/Life OS.app'
+          hdiutil verify release/Life-OS-mac-arm64.dmg
+          hdiutil verify release/Life-OS-mac-x64.dmg
+          node <<'JS'
+          const fs=require('fs'),asar=require('@electron/asar');
+          for(const arch of ['mac','mac-arm64']){const file='release/'+arch+'/Life OS.app/Contents/Resources/app.asar';if(JSON.parse(asar.extractFile(file,'package.json')).version!=='0.3.0')throw new Error('Version mismatch');if(!asar.extractFile(file,'main.cjs').toString().includes('transcribe-local'))throw new Error('Missing audio service');if(JSON.parse(asar.extractFile(file,'web/sw-manifest.json')).version!==JSON.parse(fs.readFileSync('web/sw-manifest.json')).version)throw new Error('Web build mismatch');}
+          fs.writeFileSync('release/RELEASE-VERIFICATION.json',JSON.stringify({version:'0.3.0',webBuild:JSON.parse(fs.readFileSync('web/sw-manifest.json')).version,imagesVerified:true,archivesVerified:true,signaturesVerified:true,architectures:['arm64','x64'],guiSmoke:'Not run on locked local Mac',builtAt:new Date().toISOString()},null,2));
+          JS
+      - name: Upload verified draft downloads
+        working-directory: desktop-app/release
+        run: |
+          mv Life-OS-mac-x64.dmg Life-OS-mac-intel.dmg
+          shasum -a 256 Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg > SHA256SUMS.txt
+          gh release upload v0.3.0 --repo "$GITHUB_REPOSITORY" --clobber Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg SHA256SUMS.txt RELEASE-VERIFICATION.json
