@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Download prepared release input
         run: |
-          gh release download v0.3.0 --repo "$GITHUB_REPOSITORY" --pattern release-input.tar.gz
+          gh release download v0.3.1 --repo "$GITHUB_REPOSITORY" --pattern release-input.tar.gz
           tar -xzf release-input.tar.gz
       - name: Recover unchanged public media and verify every image
         working-directory: desktop-app
@@ -38,12 +38,12 @@ jobs:
           hdiutil verify release/Life-OS-mac-x64.dmg
           node <<'JS'
           const fs=require('fs'),asar=require('@electron/asar');
-          for(const arch of ['mac','mac-arm64']){const file='release/'+arch+'/Life OS.app/Contents/Resources/app.asar';if(JSON.parse(asar.extractFile(file,'package.json')).version!=='0.3.0')throw new Error('Version mismatch');if(!asar.extractFile(file,'main.cjs').toString().includes('transcribe-local'))throw new Error('Missing audio service');if(JSON.parse(asar.extractFile(file,'web/sw-manifest.json')).version!==JSON.parse(fs.readFileSync('web/sw-manifest.json')).version)throw new Error('Web build mismatch');}
-          fs.writeFileSync('release/RELEASE-VERIFICATION.json',JSON.stringify({version:'0.3.0',webBuild:JSON.parse(fs.readFileSync('web/sw-manifest.json')).version,imagesVerified:true,archivesVerified:true,signaturesVerified:true,architectures:['arm64','x64'],guiSmoke:'Not run on locked local Mac',builtAt:new Date().toISOString()},null,2));
+          for(const arch of ['mac','mac-arm64']){const file='release/'+arch+'/Life OS.app/Contents/Resources/app.asar';if(JSON.parse(asar.extractFile(file,'package.json')).version!=='0.3.1')throw new Error('Version mismatch');if(!asar.extractFile(file,'main.cjs').toString().includes('transcribe-local'))throw new Error('Missing audio service');if(JSON.parse(asar.extractFile(file,'web/sw-manifest.json')).version!==JSON.parse(fs.readFileSync('web/sw-manifest.json')).version)throw new Error('Web build mismatch');}
+          fs.writeFileSync('release/RELEASE-VERIFICATION.json',JSON.stringify({version:'0.3.1',webBuild:JSON.parse(fs.readFileSync('web/sw-manifest.json')).version,imagesVerified:true,archivesVerified:true,signaturesVerified:true,architectures:['arm64','x64'],guiSmoke:'Not run on locked local Mac',builtAt:new Date().toISOString()},null,2));
           JS
       - name: Upload verified draft downloads
         working-directory: desktop-app/release
         run: |
           mv Life-OS-mac-x64.dmg Life-OS-mac-intel.dmg
           shasum -a 256 Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg > SHA256SUMS.txt
-          gh release upload v0.3.0 --repo "$GITHUB_REPOSITORY" --clobber Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg SHA256SUMS.txt RELEASE-VERIFICATION.json
+          gh release upload v0.3.1 --repo "$GITHUB_REPOSITORY" --clobber Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg SHA256SUMS.txt RELEASE-VERIFICATION.json
