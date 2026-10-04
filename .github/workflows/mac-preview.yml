@@ -1,6 +1,11 @@
-name: Build Mac preview from verified release input
+name: Build signed Mac draft from verified release input
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing draft release containing release-input.tar.gz
+        required: true
+        default: v0.3.4
 permissions:
   contents: write
 jobs:
@@ -9,11 +14,17 @@ jobs:
     timeout-minutes: 25
     env:
       GH_TOKEN: ${{ github.token }}
-      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      RELEASE_TAG: ${{ inputs.release_tag }}
+      CSC_LINK: ${{ secrets.CSC_LINK }}
+      CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     steps:
       - name: Download prepared release input
         run: |
-          gh release download v0.3.3 --repo "$GITHUB_REPOSITORY" --pattern release-input.tar.gz
+          test "$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = true
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern release-input.tar.gz
           tar -xzf release-input.tar.gz
       - name: Recover unchanged public media and verify every image
         working-directory: desktop-app
@@ -28,22 +39,19 @@ jobs:
       - name: Install build dependencies
         working-directory: desktop-app
         run: npm ci
-      - name: Build and verify both Mac installers
+      - name: Require signing inputs
+        working-directory: desktop-app
+        run: node scripts/release-preflight.cjs
+      - name: Build and verify both signed Mac installers
         working-directory: desktop-app
         run: |
           ./node_modules/.bin/electron-builder --mac dmg --arm64 --x64
-          codesign --verify --deep --strict 'release/mac-arm64/Life OS.app'
-          codesign --verify --deep --strict 'release/mac/Life OS.app'
-          hdiutil verify release/Life-OS-mac-arm64.dmg
-          hdiutil verify release/Life-OS-mac-x64.dmg
-          node <<'JS'
-          const fs=require('fs'),asar=require('@electron/asar');
-          for(const arch of ['mac','mac-arm64']){const file='release/'+arch+'/Life OS.app/Contents/Resources/app.asar';if(JSON.parse(asar.extractFile(file,'package.json')).version!=='0.3.3')throw new Error('Version mismatch');if(!asar.extractFile(file,'main.cjs').toString().includes('transcribe-local'))throw new Error('Missing audio service');if(JSON.parse(asar.extractFile(file,'web/sw-manifest.json')).version!==JSON.parse(fs.readFileSync('web/sw-manifest.json')).version)throw new Error('Web build mismatch');}
-          fs.writeFileSync('release/RELEASE-VERIFICATION.json',JSON.stringify({version:'0.3.3',webBuild:JSON.parse(fs.readFileSync('web/sw-manifest.json')).version,imagesVerified:true,archivesVerified:true,signaturesVerified:true,architectures:['arm64','x64'],guiSmoke:'Not run on locked local Mac',builtAt:new Date().toISOString()},null,2));
-          JS
-      - name: Upload verified draft downloads
+          node scripts/verify-public-release.cjs
+      - name: Upload verified assets to draft only
         working-directory: desktop-app/release
         run: |
+          test "$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = true
           mv Life-OS-mac-x64.dmg Life-OS-mac-intel.dmg
           shasum -a 256 Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg > SHA256SUMS.txt
-          gh release upload v0.3.3 --repo "$GITHUB_REPOSITORY" --clobber Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg SHA256SUMS.txt RELEASE-VERIFICATION.json
+          gh release upload "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --clobber Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg SHA256SUMS.txt RELEASE-VERIFICATION.json
+          echo 'Keep this release draft until clean-Mac browser download and installation tests pass.'
