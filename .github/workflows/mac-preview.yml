@@ -51,7 +51,6 @@ jobs:
         working-directory: desktop-app/release
         run: |
           test "$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" = true
-          mv Life-OS-mac-x64.dmg Life-OS-mac-intel.dmg
           shasum -a 256 Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg > SHA256SUMS.txt
           gh release upload "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --clobber Life-OS-mac-arm64.dmg Life-OS-mac-intel.dmg SHA256SUMS.txt RELEASE-VERIFICATION.json
           echo 'Keep this release draft until clean-Mac browser download and installation tests pass.'
