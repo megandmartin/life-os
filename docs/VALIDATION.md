@@ -14,9 +14,9 @@ npm test
 
 On a Linux machine without Chromium's system libraries, use `npx playwright install --with-deps chromium` instead. To inspect a report locally, run `npm run test:report`.
 
-On 3 November 2026, the public suite passed **4/4 locally** in Chromium on macOS, using Playwright 1.64.1. This is separate from the GitHub CI results linked below.
+On 3 November 2026, the public suite passed **4/4 locally** in Chromium on macOS and **4/4 on GitHub Actions**. The [first successful CI run](https://github.com/megandmartin/life-os/actions/runs/41496619532) tested commit `23cc6ce376b4a0fb9106998727b496d5615fbe1c` from a fresh Linux checkout with Playwright 1.64.1.
 
-The [workflow](../.github/workflows/preview-checks.yml) runs the same suite on GitHub Actions. The [Actions history](https://github.com/megandmartin/life-os/actions/workflows/preview-checks.yml) shows the actual results and downloadable reports. Tests use fresh browser contexts, synthetic notes and public demo lives. They require no account, provider key, wallet or private data. Retries are disabled so a failed attempt is visible.
+The [workflow](../.github/workflows/preview-checks.yml) runs the same suite on GitHub Actions. The [Actions history](https://github.com/megandmartin/life-os/actions/workflows/preview-checks.yml) shows the actual results and downloadable reports. Reports are retained for seven days; rerun the workflow or local command to generate a fresh report. Tests use fresh browser contexts, synthetic notes and public demo lives. They require no account, provider key, wallet or private data. Retries are disabled so a failed attempt is visible.
 
 | Public check | What it exercises |
 |---|---|

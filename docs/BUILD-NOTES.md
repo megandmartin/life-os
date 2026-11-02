@@ -12,7 +12,7 @@ For a separate project with publicly inspectable implementation, see [PredictKit
 
 People who already keep Markdown notes can have the information they need spread across projects, daily notes and references. Life OS explores whether a shared visual model can make those connections easier to use while leaving the underlying notes portable.
 
-The initial audience is people already using Obsidian or a folder of Markdown. The browser preview lets them inspect the interaction before considering a native application. The project has not established that these choices produce retention or willingness to pay.
+The initial audience is people already using Obsidian or a folder of Markdown. The browser preview lets them inspect the interaction before considering a native application. This repository does not report measured retention or willingness to pay.
 
 ## Three consequential choices
 

@@ -6,6 +6,8 @@
 
 # Life OS
 
+[![Public preview checks](https://github.com/megandmartin/life-os/actions/workflows/preview-checks.yml/badge.svg)](https://github.com/megandmartin/life-os/actions/workflows/preview-checks.yml)
+
 **The Markdown notes you already keep, as a visual operating system for your life.**
 
 Bring today's priorities, projects, people and longer-term goals into one picture. Life OS adds a visual layer to your notes, with different views for different ways of thinking.

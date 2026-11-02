@@ -52,5 +52,15 @@
     "playwright": "1.64.1",
     "environment": "Chromium, macOS arm64, Node.js 26.12.1",
     "boundary": "Fresh browser contexts; fixed public demo and HTML directory-input fixture import. Separate from private module checks and remote CI."
+  },
+  "public_browser_ci_first_success": {
+    "run_url": "https://github.com/megandmartin/life-os/actions/runs/41496619532",
+    "run_id": 41496619532,
+    "tested_commit": "23cc6ce376b4a0fb9106998727b496d5615fbe1c",
+    "conclusion": "success",
+    "passed": 4,
+    "failed": 0,
+    "environment": "GitHub-hosted Ubuntu; Node.js 24; Chromium; Playwright 1.64.1",
+    "boundary": "Public browser journeys only; no native release, private-source audit or live provider evaluation."
   }
 }
