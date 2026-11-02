@@ -1,0 +1,57 @@
+name: Public preview checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tests/**'
+      - 'examples/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'playwright.config.mjs'
+      - '.github/workflows/preview-checks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tests/**'
+      - 'examples/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'playwright.config.mjs'
+      - '.github/workflows/preview-checks.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install pinned test dependencies
+        run: npm ci --ignore-scripts
+      - name: Install Chromium and its system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Test the public preview with synthetic data
+        run: npm test
+      - name: Upload browser report and failure traces
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: public-preview-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

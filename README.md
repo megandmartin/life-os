@@ -10,9 +10,11 @@
 
 Bring today's priorities, projects, people and longer-term goals into one picture. Life OS adds a visual layer to your notes, with different views for different ways of thinking.
 
-**[Try the browser preview](https://open-your-life.vercel.app/app/)** · [Explore the views](#one-life-different-views) · [Release status](#desktop-preview) · [Share feedback](https://github.com/megandmartin/life-os/issues)
+**[Try the browser preview](https://open-your-life.vercel.app/app/)** · [Architecture](docs/TECHNICAL-OVERVIEW.md) · [Run the checks](docs/VALIDATION.md) · [Release status](#desktop-preview)
 
-Explore a demo life with nothing to install. This repository hosts preview information and release assets; application source is not included.
+Explore a demo life with nothing to install. This repository includes runnable browser checks, sample notes and release information. Application source remains private.
+
+Built by [Megan (@megandmartin)](https://github.com/megandmartin): product concept, interface design, implementation and testing. Development and review are AI-assisted.
 
 ## See the day. Keep the bigger picture.
 
@@ -65,6 +67,17 @@ Demo lives are illustrative and labelled. Fictional personas are invented. Hypot
 The next macOS release targets **macOS 13 or later**, on Apple silicon and Intel. A signed and notarized replacement has not been published.
 
 [Check release notes and availability](https://github.com/megandmartin/life-os/releases)
+
+## How it is built
+
+One Markdown model powers the different views. Explicit metadata takes precedence over explainable, local inference; saving is a separate permission with conflict checks and recovery paths.
+
+- [Technical overview](docs/TECHNICAL-OVERVIEW.md): architecture, trust boundaries and tradeoffs.
+- [Build notes](docs/BUILD-NOTES.md): the problem, decisions and remaining product questions.
+- [Try the five-note sample vault](examples/README.md), or [run the public browser checks](docs/VALIDATION.md).
+- [View actual CI results and reports](https://github.com/megandmartin/life-os/actions/workflows/preview-checks.yml). Local implementation checks and their limits are recorded separately.
+
+For a separate project with public implementation, see [PredictKit](https://github.com/megandmartin/predictkit).
 
 ## Help shape Life OS
 

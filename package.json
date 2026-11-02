@@ -1,0 +1,13 @@
+{
+  "name": "life-os-preview-checks",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Reproducible browser checks for the public Life OS preview; application source is separate.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": { "@playwright/test": "1.64.1" }
+}

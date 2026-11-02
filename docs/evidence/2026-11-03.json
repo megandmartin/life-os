@@ -1,0 +1,56 @@
+{
+  "recorded_on": "2026-11-03",
+  "timezone": "Asia/Singapore",
+  "scope": "Local private development checkout; not a public-source or deployed-build attestation.",
+  "environment": {
+    "os": "macOS 27.0.1",
+    "architecture": "arm64",
+    "node": "26.12.1"
+  },
+  "results": [
+    {
+      "command": "cd app && npm run write:check",
+      "exit_code": 0,
+      "passed": 85,
+      "unit": "checks",
+      "boundary": "Node writer uses temporary copies; browser filesystem handles are mocked."
+    },
+    {
+      "command": "cd app && npm run graph:check",
+      "exit_code": 0,
+      "passed": 455,
+      "unit": "assertions",
+      "boundary": "Demo, sparse and synthetic scale fixtures; no real-user performance claim."
+    },
+    {
+      "command": "cd app && npm run ask:check",
+      "exit_code": 0,
+      "passed": 3593,
+      "unit": "assertions",
+      "boundary": "Local engine and request construction; network disabled; no live LLM quality claim."
+    },
+    {
+      "command": "cd desktop-app && npm run privacy:check",
+      "exit_code": 0,
+      "passed": 32,
+      "unit": "checks",
+      "boundary": "Policies and configuration; not native GUI, installation or signed-release acceptance."
+    }
+  ],
+  "public_browser_entry_snapshot": {
+    "url": "https://open-your-life.vercel.app/app/",
+    "index_sha256": "ce02ce588a12f16a2650a8352babf2a7efb80ca2edb3690057eb9305319660d3",
+    "module_path": "./assets/index-D4mLAIOd.js",
+    "boundary": "Observed entry document only. The live deployment can change independently; private local checks do not identify it as the same build."
+  },
+  "independently_reproducible_here": false,
+  "public_reproduction": "See docs/VALIDATION.md and .github/workflows/preview-checks.yml for the separate public browser suite.",
+  "public_browser_suite_local": {
+    "command": "npm test",
+    "passed": 4,
+    "failed": 0,
+    "playwright": "1.64.1",
+    "environment": "Chromium, macOS arm64, Node.js 26.12.1",
+    "boundary": "Fresh browser contexts; fixed public demo and HTML directory-input fixture import. Separate from private module checks and remote CI."
+  }
+}
