@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Life OS repository preview</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700&family=Host+Grotesk:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}body{margin:0;width:1280px;height:640px;overflow:hidden;background:#fcfbf9;color:#1d1c1a;font-family:'Host Grotesk',sans-serif}.brand{position:absolute;top:46px;left:52px;display:flex;align-items:center;gap:12px;font-weight:600;font-size:28px}.mark{width:32px;height:32px;color:#0b5c63}h1{position:absolute;left:52px;top:152px;margin:0;font:700 88px/.94 'Bricolage Grotesque',sans-serif;letter-spacing:-4.5px;max-width:490px}.intro{position:absolute;top:356px;left:56px;font-size:25px;line-height:1.38;margin:0;color:#5c5953}.foot{position:absolute;bottom:46px;left:56px;font-size:17px;color:#0b5c63;font-weight:500}.visual{position:absolute;left:560px;top:0;right:0;height:640px;background:#e4ecee}.window{position:absolute;overflow:hidden;border:1px solid #00000020;border-radius:12px;background:#fcfbf9;box-shadow:0 20px 45px #142d292e}.window img{display:block;width:100%;height:auto}.desktop{left:31px;top:86px;width:660px}.editorial{left:118px;top:362px;width:550px}.caption{position:absolute;left:34px;top:42px;font-size:16px;color:#46615e}.variant-b{background:#0b5c63;color:#fcfbf9}.variant-b .brand .mark{color:#fcfbf9}.variant-b .intro,.variant-b .foot{color:#d5e2df}.variant-b .visual{background:#e9e1d4}.variant-b .desktop{top:130px;left:28px;width:670px}.variant-b .editorial{display:none}.variant-b h1{font-size:82px;top:162px}.variant-c .visual{left:0;top:268px;width:1280px;height:372px;background:#e4ecee}.variant-c .brand{top:38px}.variant-c h1{top:100px;max-width:none;font-size:76px}.variant-c h1 br{display:none}.variant-c .intro{top:193px;left:56px;font-size:23px}.variant-c .intro br{display:none}.variant-c .desktop{left:56px;top:35px;width:730px}.variant-c .editorial{left:820px;top:35px;width:590px}.variant-c .caption{display:none}.variant-c .foot{left:auto;right:52px;bottom:auto;top:49px}
+</style>
+</head>
+<body>
+<div class="visual"><div class="caption">One life. A different perspective.</div><div class="window desktop"><img src="../../assets/desktop-preview.jpg" alt="Life OS Personal Desktop, Maya fictional demo"></div><div class="window editorial"><img src="../../assets/editorial-preview.jpg" alt="The same fictional life in Editorial"></div></div>
+<div class="brand"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 1.5A10.5 10.5 0 0 1 12 22.5A5.25 5.25 0 0 1 12 12A5.25 5.25 0 0 0 12 1.5Z" fill="currentColor"/></svg>Life OS</div>
+<h1>Open<br>your life.</h1>
+<p class="intro">A visual workspace<br>for your Markdown notes.</p>
+<div class="foot">Your notes. A bigger picture.</div>
+<script>const v=new URLSearchParams(location.search).get('variant');if(v)document.body.classList.add('variant-'+v);if(v==='c')document.querySelectorAll('h1 br,.intro br').forEach(br=>br.replaceWith(document.createTextNode(' ')));</script>
+</body></html>

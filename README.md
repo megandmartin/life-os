@@ -1,44 +1,71 @@
+<p align="center">
+  <a href="https://open-your-life.vercel.app/app/">
+    <img src="assets/readme-hero.jpg" alt="Life OS — Open your life. A visual workspace for your Markdown notes, shown in Desktop and Editorial." width="1280">
+  </a>
+</p>
+
 # Life OS
 
-**Open your life.** Life OS turns the Markdown notes you already keep into a visual operating system for your life: today, projects, people, places and the long arc. It's beautiful without any decorating, and everything stays on your device.
+**The Markdown notes you already keep, as a visual operating system for your life.**
 
-This repository hosts the **macOS preview downloads**. You can also [try Life OS in your browser](https://open-your-life.vercel.app/app/) with nothing to install.
+Bring today's priorities, projects, people and longer-term goals into one picture. Life OS adds a visual layer to your notes, with different views for different ways of thinking.
 
-## Download
+**[Try the browser preview](https://open-your-life.vercel.app/app/)** · [Explore the views](#one-life-different-views) · [Release status](#desktop-preview) · [Share feedback](https://github.com/megandmartin/life-os/issues)
 
-| Mac | File |
-|---|---|
-| Apple silicon (M1 and later) | [Life-OS-mac-arm64.dmg](https://github.com/megandmartin/life-os/releases/latest/download/Life-OS-mac-arm64.dmg) |
-| Intel | [Life-OS-mac-intel.dmg](https://github.com/megandmartin/life-os/releases/latest/download/Life-OS-mac-intel.dmg) |
+Explore a demo life with nothing to install. This repository hosts preview information and release assets; application source is not included.
 
-You need macOS 12 or later.
+## See the day. Keep the bigger picture.
 
-### First launch
+- **Know what matters now.** Bring your current focus, projects and goals into view.
+- **Follow the connections.** Explore the people, places and notes behind a project, or search your vault with ⌘K.
+- **Make space to reflect.** Use guided practices and Ask My Life to explore questions with context from your notes. Optional AI features need their own setup.
+- **Keep your files familiar.** Start with an Obsidian vault or a folder of Markdown. Your notes remain the source.
 
-This preview isn't notarised by Apple yet, so macOS asks before opening it the first time.
+## One life, different views
 
-1. Open the download and drag **Life OS** into Applications.
-2. Open Life OS. If macOS says it can't check the app, choose **Done**.
-3. Go to **System Settings › Privacy & Security**, scroll down and click **Open Anyway**.
+### Personal Desktop
 
-Or, in Terminal:
+A familiar desktop for your current focus, projects, people and places.
 
-```
-xattr -dr com.apple.quarantine "/Applications/Life OS.app"
-```
+[![Life OS Personal Desktop showing Maya's priorities and linked notes over a landscape wallpaper. Maya is a fictional demo persona.](assets/desktop-preview.jpg)](https://open-your-life.vercel.app/app/?world=desktop&persona=maya&theme=light)
 
-## What's inside
+### Editorial
 
-- **Your vault, as a life.** Point it at an Obsidian vault or any folder of Markdown. It redraws the moment a note changes.
-- **Eight worlds, light and dark:** Desktop, Editorial, Reel, Sleeve, Ask, Socratis Sanctuary, Atelier and Observatory.
-- **Available views are your choice.** Desktop, Editorial, Ask and Socratis Observatory appear by default. Enable or hide any view in Settings → Appearance, saved on your device.
-- **A council of 19 agents**, guided practices, life pillars, agent organisation and automation plans.
-- **Voice notes and read aloud** in sessions and pillars, with recordings included in full backups. Local transcription requires whisper-cli, ffmpeg and a Whisper model installed on your Mac; device speech needs no API key.
-- **Graph view, Search (⌘K), Ask My Life and a Year view.** Ask My Life answers from your notes and cites them.
-- **Explore lives.** Nine demo lives, fictional, public-figure and historical, each labelled for what it is.
-- **Safe by default.** Life OS reads your notes and only saves changes after you allow it. It keeps the previous version of every note, and it can keep a full backup copy of your vault.
-- **No account and no upload.** Your notes stay on your machine.
+The same notes, presented as a personal journal with room for the longer view.
 
-## Demo lives
+[![The same fictional Maya demo in Life OS Editorial, with a journal-style homepage, navigation and goals.](assets/editorial-preview.jpg)](https://open-your-life.vercel.app/app/?world=editorial&persona=maya&theme=light)
 
-Maya, Priya, Nina, Leila, Jordan and Marco are fictional. The Sam Altman and Gisele Bündchen lives are hypothetical demos built from their public writing and interviews. They are not their notes, and neither of them is affiliated with or endorses Life OS. The Leonardo da Vinci life is built from the historical record. Anything invented is labelled Demo.
+Explore light and dark mode, and choose which worlds appear in **Settings → Appearance**. Screenshots show the fictional Maya demo.
+
+## Try it with your own notes
+
+1. **[Open the browser preview](https://open-your-life.vercel.app/app/)** and explore a demo life.
+2. **Choose Add your life** to start your own or import an existing folder of Markdown notes.
+3. **Explore your connections** and choose a view that feels like yours.
+
+Browser folder access and saving support vary. Browser and desktop storage are separate; keep backups of the notes and data you want to retain.
+
+## Your notes, under your control
+
+Opening a local folder reads your notes on your device. Saving changes to a supported vault requires your permission, and supported save paths preserve the previous version before replacing a note.
+
+Optional AI, voice and memory features can send selected context to configured providers when enabled. Local files are not automatically encrypted by Life OS; folders in a cloud-sync location may also sync through that service.
+
+<details>
+<summary><strong>About the demo lives</strong></summary>
+
+Demo lives are illustrative and labelled. Fictional personas are invented. Hypothetical public-figure examples draw on public material; they are not those people's private notes and do not imply affiliation or endorsement. Historical examples draw on the historical record. Invented content is labelled as demo material.
+
+</details>
+
+## Desktop preview
+
+**Native downloads are paused while signed releases are prepared.** The [older macOS preview](https://github.com/megandmartin/life-os/releases/tag/v0.3.3) does not pass Gatekeeper on a fresh Mac. Keep macOS security protections enabled and use the browser preview for now.
+
+The next macOS release targets **macOS 13 or later**, on Apple silicon and Intel. A signed and notarized replacement has not been published.
+
+[Check release notes and availability](https://github.com/megandmartin/life-os/releases)
+
+## Help shape Life OS
+
+[Report a bug or share an idea](https://github.com/megandmartin/life-os/issues). Include your browser or operating system, what you expected and what happened. Remove personal notes and identifying information from screenshots.
